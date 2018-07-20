@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>d3-drag</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    
+</body>
+<script src="d3.v3.min.js" charset="utf-8"></script>
+<script>		   
+    var width = "100%";
+    var height = "800";
+    var circles = [{ cx: 150, cy: 200, r: 30 },
+    { cx: 250, cy: 200, r: 30 }, { cx: 350, cy: 200, r: 30 }];
+
+    var svg = d3.select("body").append("svg")
+        .attr("width", width)
+        .attr("height", height);
+
+    var drag = d3.behavior.drag()
+        .on("drag", dragmove);
+
+    svg.selectAll("circle")
+        .data(circles)
+        .enter()
+        .append("circle")
+        .attr("cx", function (d) { return d.cx; })
+        .attr("cy", function (d) { return d.cy; })
+        .attr("r", function (d) { return d.r; })
+        .attr("fill", "black")
+        .call(drag);
+
+    function dragmove(d) {
+        d3.select(this)
+            .attr("cx", d.cx = d3.event.x)
+            .attr("cy", d.cy = d3.event.y);
+    }
+</script>
+</html>
